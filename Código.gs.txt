@@ -1,0 +1,19 @@
+function doGet(e) {
+  var page = (e && e.parameter && e.parameter.page) ? String(e.parameter.page) : 'home';
+  var allowed = ['home','quem-somos','institucional','portais','editais','noticias','servicos','contato','lgpd'];
+  if (allowed.indexOf(page) === -1) page = 'home';
+
+  var titles = {'home':'Início','quem-somos':'Quem somos','institucional':'Institucional','portais':'Portais','editais':'Editais e Licitações','noticias':'Notícias','servicos':'Serviços','contato':'Contato','lgpd':'LGPD'};
+
+  var t = HtmlService.createTemplateFromFile('Index');
+  t.page = page;
+  t.pageTitle = titles[page] || 'Início';
+
+  return t.evaluate()
+    .setTitle(t.pageTitle + ' — Secretaria — Governo do Piauí')
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+}
+
+function include(filename) {
+  return HtmlService.createHtmlOutputFromFile(filename).getContent();
+}
